@@ -1,0 +1,32 @@
+-- Create database first in phpMyAdmin:
+-- CREATE DATABASE clinic_db;
+-- Then select clinic_db and run the statements below.
+
+CREATE TABLE doctor (
+    docID VARCHAR(50) PRIMARY KEY,
+    docFName VARCHAR(100) NOT NULL,
+    docLName VARCHAR(100) NOT NULL,
+    docAddress VARCHAR(255) NOT NULL,
+    docSpecial VARCHAR(120) NOT NULL
+);
+
+CREATE TABLE patient (
+    patID VARCHAR(50) PRIMARY KEY,
+    patFName VARCHAR(100) NOT NULL,
+    patLName VARCHAR(100) NOT NULL,
+    patAge INT NOT NULL,
+    patTelNo VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE consultation (
+    consultID VARCHAR(50) PRIMARY KEY,
+    patID VARCHAR(50) NOT NULL,
+    docID VARCHAR(50) NOT NULL,
+    consultDate DATETIME NOT NULL,
+    diagnosis TEXT NOT NULL,
+    prescription TEXT NOT NULL,
+    CONSTRAINT fk_consult_patient FOREIGN KEY (patID) REFERENCES patient(patID)
+        ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT fk_consult_doctor FOREIGN KEY (docID) REFERENCES doctor(docID)
+        ON UPDATE CASCADE ON DELETE RESTRICT
+);
